@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node ./start/www.js",
-    "devstart": "nodemon ./start/www.js"
+    "start": "node ./bin/www.js",
+    "devstart": "nodemon ./bin/www.js"
   },
   "dependencies": {
     "bluebird": "3.7.1",
@@ -13,7 +13,7 @@
     "express": "~4.16.1",
     "express-validator": "6.2.0",
     "http-errors": "~1.6.3",
-    "mongodb": "3.3.4",
+    "mongoose": "^5.3.14",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11"
   },
