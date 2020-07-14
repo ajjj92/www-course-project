@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node ./start/www.js",
-    "devstart": "nodemon ./start/www.js"
+    "start": "node ./bin/www.js",
+    "devstart": "nodemon ./bin/www.js"
   },
   "dependencies": {
     "bluebird": "3.7.1",
