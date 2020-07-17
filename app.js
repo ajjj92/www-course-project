@@ -4,12 +4,29 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Promise = require("bluebird");
+var passport = require('passport');
 
 // Define routers
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index')(passport);
 var postsRouter = require('./routes/posts');
 
 var app = express();
+
+// Configuring Passport
+var expressSession = require('express-session');
+// TODO - Why Do we need this key ?
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+ // Using the flash middleware provided by connect-flash to store messages in session
+ // and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
+
+// Initialize Passport
+var initPassport = require('./passport/initPass');
+initPassport(passport);
 
 // Set up mongoose connection
 var mongoose = require('mongoose');
@@ -59,8 +76,12 @@ if (mongoURL == null) {
 }
 
 // Connecting to DB
-mongoose.connect(mongoURL);
+//for dev
+//mongoose.connect(mongoURL);
+var url = "mongodb+srv://admin:juustonaksu@cluster0.jjndj.azure.mongodb.net/sampledb?retryWrites=true&w=majority";
 mongoose.Promise = Promise;
+mongoose.connect(url);
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -83,6 +104,8 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -94,4 +117,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
 module.exports = app;
+

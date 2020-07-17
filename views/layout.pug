@@ -2,6 +2,25 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(type="text/css" rel="stylesheet" href="/stylesheets/materialize/css/materialize.min.css"  media="screen,projection")
+    link(type="text/css" rel="stylesheet" href="/stylesheets/style.css")
+    link( href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    script(src="/helper.js")
   body
-    block content
+    nav
+      div(class="nav-wrapper")
+        ul(class="left hide-on-med-and-down")
+          li 
+            a(href='/home') HOME
+          li 
+            a(href='/posts') FEED
+          li 
+            a PROFILE
+    div(class="container")
+      block content
+  footer(class="page-footer")
+    div(class="container")
+      div(class="row")
+        div(class="col 16 s12")
+          h4 FOOTER
+    

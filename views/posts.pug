@@ -1,21 +1,45 @@
 extends layout
 
 block content
-  h1= title
+	div(class="row")
+		ul(class="collapsible")
+			div(class="collapsible-header")
+			#user
+				h4 Share your ideas #{user.username} 
+			div(class="collapsible-body")
+				div(class="col s3")
+			
+				form(method='POST' action='/posts/create')
+					div(class="form-group")
+						div(class="input-field")
+							textarea(class="materialize-textarea" placeholder='...' name='content' id="postcontent")
+					button(type='submit' class="waves-effect waves-light btn" onclick="M.toast({html: 'I am a toast'})") post
+						i(class="material-icons right") send
+	div(class="row")
+		h1= title
+		div(class="col s9")
+			each post in post_list
+				div(class="card horizontal")
+					div(class="row")
+						div(class="col s1")
+							i(class="large material-icons center-align" id="form-icon") account_circle
+					span(class="card-title" id="post-title") #{post.author}
+					div(class="card-content" id="textwrap")
+						p #{post.content}
+			else
+				li No thoughts to share.
+	
 
-  ul
-  each post in post_list
-    li #{post.author}: #{post.content}
+			//- form(method='POST' action='/posts/create')
+			//- 	div.form-group
+			//- 		div(class="input-field")
+			//- 			label(for='name') Name:
+			//- 			input#name.form-control(type='text', placeholder='Your name' name='author')
+			//- 	div.form-group
+			//- 		div(class="input-field")
+			//- 			i(class="material-icons prefix") mode_edit
+			//- 			textarea(class="materialize-textarea" placeholder='...' name='content' id="postcontent")
+			//- 	button(type='submit' class="waves-effect waves-light btn") share
+			//- 	i(class="material-icons right") send
 
-  else
-    li There are no posts yet.
 
-  h2 Submit New Post
-  form(method='POST' action='/posts/create')
-            div.form-group
-              label(for='name') Name:
-              input#name.form-control(type='text', placeholder='Your name' name='author')
-            div.form-group
-              label(for='content') Post text:
-              input#content.form-control(type='text' name='content')
-            button.btn.btn-primary(type='submit') Submit new post

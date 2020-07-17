@@ -1,8 +1,51 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-a {
-  color: #00B7FF;
+main {
+  flex: 1 0 auto;
+}
+
+
+#textwrap {
+  max-width: 500px;
+  word-wrap: break-word;
+}
+
+
+#postcontent{
+  width: 400px; height: 160px;
+}
+#form-card{
+  padding: 30px;
+}
+
+#form-icon{
+  position: relative;
+  /* Adjust these values accordingly */
+  left: 40%;
+  vertical-align: 0px;
+align-content: center;
+}
+#login-form{
+  position: relative;
+  /* Adjust these values accordingly */
+  left: 33%;
+
+}
+#form-layout {
+  padding: 20px;
+}
+
+a { color: black; }
+#create-account-link {
+  color: white;
+}
+#register-card{
+  width: 400px; height: 160px;
+}
+#post-title {
+  font-weight: bold;
 }
