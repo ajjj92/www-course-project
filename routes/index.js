@@ -1,68 +1,51 @@
 var express = require('express');
 var router = express.Router();
 
-var post_controller = require('../controllers/postController');
-
-
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
-
-
-// As with any middleware it is quintessential to call next()
-// if the user is authenticated
-
 var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
-	// Passport adds this method to request object. A middleware is allowed to add properties to
-	// request and response objects
+	//if user is authenticated then -> next middleware
 	if (req.isAuthenticated())
 		return next();
-	// if the user is not authenticated then redirect him to the login page
+	// if not then redirect to index page
 	res.redirect('/');
 }
 
 module.exports = function(passport){
-
-  // Require controllers
-
-
-	/* GET login page. */
+	//routes
 	router.get('/', function(req, res) {
-    	// Display the Login page with any flash message, if any
+
 		res.render('index', { message: req.flash('message') });
 	});
 
-	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
+		successRedirect: '/posts',
 		failureRedirect: '/',
 		failureFlash : true  
 	}));
 
-	/* GET Registration Page */
 	router.get('/signup', function(req, res){
 		res.render('register',{message: req.flash('message')});
 	});
 
-	/* Handle Registration POST */
+	//passport authenticate, if succesfull redirect to homepage
 	router.post('/signup', passport.authenticate('signup', {
 		successRedirect: '/home',
 		failureRedirect: '/signup',
 		failureFlash : true  
 	}));
 
-	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
-		res.render('home', { user: req.user });
+		res.render('home', { user: req.user, flash:req.flash("updatemsg") });
 	});
 
-	/* Handle Logout */
 	router.get('/signout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
+
+	router.post('/update', isAuthenticated,passport.authenticate('update', {
+		successRedirect: '/home',
+		failureFlash : true  
+	}));
 
 	return router;
 }

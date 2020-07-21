@@ -1,45 +1,32 @@
 extends layout
 
 block content
-	div(class="row")
-		ul(class="collapsible")
-			div(class="collapsible-header")
-			#user
-				h4 Share your ideas #{user.username} 
-			div(class="collapsible-body")
-				div(class="col s3")
-			
-				form(method='POST' action='/posts/create')
-					div(class="form-group")
-						div(class="input-field")
-							textarea(class="materialize-textarea" placeholder='...' name='content' id="postcontent")
-					button(type='submit' class="waves-effect waves-light btn" onclick="M.toast({html: 'I am a toast'})") post
-						i(class="material-icons right") send
-	div(class="row")
-		h1= title
-		div(class="col s9")
+	div(class="container" id="main-content")
+		div(class="row")
+			h1(class="center")= title
 			each post in post_list
-				div(class="card horizontal")
-					div(class="row")
-						div(class="col s1")
-							i(class="large material-icons center-align" id="form-icon") account_circle
-					span(class="card-title" id="post-title") #{post.author}
-					div(class="card-content" id="textwrap")
-						p #{post.content}
+				div(class="col s12")
+					div(class="card round-corner")
+						div(class="card-content show-white-space" id="textwrap")
+							#post
+							span(class="card-title") #{post.author}>
+							p #{post.content}
 			else
 				li No thoughts to share.
-	
-
-			//- form(method='POST' action='/posts/create')
-			//- 	div.form-group
-			//- 		div(class="input-field")
-			//- 			label(for='name') Name:
-			//- 			input#name.form-control(type='text', placeholder='Your name' name='author')
-			//- 	div.form-group
-			//- 		div(class="input-field")
-			//- 			i(class="material-icons prefix") mode_edit
-			//- 			textarea(class="materialize-textarea" placeholder='...' name='content' id="postcontent")
-			//- 	button(type='submit' class="waves-effect waves-light btn") share
-			//- 	i(class="material-icons right") send
-
-
+	div(class="fixed-action-btn")
+		a(class="btn-floating btn-large red modal-trigger" href="#modal1")
+			i(class="large material-icons") mode_edit
+		div(id="modal1" class="modal round-corner")
+			div(class="modal-content")
+				h4 Share your thoughts #{user.username} 
+				#user
+				div(class="row center")
+					div(class="col s12")
+						div(class="card round-corner" id="post-card-content")
+							div(class="card-content show-white-space" id="textwrap")
+								form(method='POST' action='/posts/create')
+									div(class="form-group")
+										div(class="input-field")
+											textarea(class="materialize-textarea force-height" id="postcontent" placeholder='...' name='content' data-length="300")
+									button(type='submit' class="btn") post
+										i(class="material-icons right") send

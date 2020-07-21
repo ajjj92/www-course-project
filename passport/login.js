@@ -4,28 +4,28 @@ var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(passport){
 
+    //login strategy
 	passport.use('login', new LocalStrategy({
             passReqToCallback : true
         },
         function(req, username, password, done) { 
-            // check in mongo if a user with username exists or not
+            // check from mongo if username 
             User.findOne({ 'username' :  username }, 
                 function(err, user) {
-                    // In case of any error, return using the done method
+                    // use done to return in case of errors
                     if (err)
                         return done(err);
-                    // Username does not exist, log the error and redirect back
+                    // if no username in Mongo 
                     if (!user){
                         console.log('User Not Found with username '+username);
                         return done(null, false, req.flash('message', 'User Not found.'));                 
                     }
-                    // User exists but wrong password, log the error 
+                    // if wrong password redirect back to login page
                     if (!isValidPassword(user, password)){
                         console.log('Invalid Password');
-                        return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
+                        return done(null, false, req.flash('message', 'Invalid Password')); // 
                     }
-                    // User and password both match, return user from done method
-                    // which will be treated like success
+                    // if username and password ok, return succesfully
                     return done(null, user);
                 }
             );
@@ -33,7 +33,7 @@ module.exports = function(passport){
         })
     );
 
-
+    //use bcrypt to validate password, returns true or false
     var isValidPassword = function(user, password){
         return bCrypt.compareSync(password, user.password);
     }

@@ -1,3 +1,6 @@
+//Code from course examples
+
+
 /**
  * Module dependencies.
  */

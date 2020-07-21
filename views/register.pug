@@ -1,19 +1,30 @@
 extends layout
 
 block content
+	div(class="parallax-container upper-parallax")
+		div(class="parallax")
+			img(src="https://apod.nasa.gov/apod/image/2007/NeowiseNebs_Oszywa_3000.jpg")
+	div(class="section white")
+		div(class="row center")
+			h1 Fill in your info
 	div(class="row")
-		div(class="col s4" id="login-form")
-			div(class="card blue-grey darken-1" id="form-layout")
+		div(class="col s12 center-align")
+			div(class="card" id="form-layout")
 				div(class="row")
 					i(class="large material-icons" id="form-icon") account_circle
 				div(class="row")
 					div(class="col")
 						form(action='/signup', method='POST')
 							div(class="form-group")
+								input(type='text', name='firstName', placeholder='Firstname',required, autofocus)
+								input(type='text', name='lastName', placeholder='Lastname',required, autofocus)
 								input(type='text', name='username', placeholder='Username',required, autofocus)
 								input(type='password', name='password', placeholder='Password', required)
 								input(type='email', name='email', placeholder='Email',required)
-								button(class="waves-effect waves-light btn", type='submit') Register
+								button(class="waves-effect btn", type='submit') Register
 					#message
 						if message
-							h1.text-center.error-message #{message}
+							h1(class="text-center.error-message") #{message}
+	div(class="parallax-container")
+		div(class="parallax")
+			img(src="https://apod.nasa.gov/apod/image/2007/NeowiseNebs_Oszywa_3000.jpg")

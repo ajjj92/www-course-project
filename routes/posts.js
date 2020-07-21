@@ -6,19 +6,17 @@ var post_controller = require('../controllers/postController');
 
 
 var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
-	// Passport adds this method to request object. A middleware is allowed to add properties to
-	// request and response objects
+	//if user is authenticated then -> next middleware
 	if (req.isAuthenticated())
 		return next();
-	// if the user is not authenticated then redirect him to the login page
+	// if not then redirect to index page
 	res.redirect('/');
 }
 
-// GET post listing page
+//get post list page, we send the post_contrloller as middleware as in example by Antti Knutas
 router.get('/', isAuthenticated, post_controller.index );
 
-// POST request for creating a new post
+//create new post
 router.post('/create',isAuthenticated, post_controller.create);
 
 module.exports = router;

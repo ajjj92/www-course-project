@@ -6,31 +6,31 @@ var logger = require('morgan');
 var Promise = require("bluebird");
 var passport = require('passport');
 
-// Define routers
+// define routers
 var indexRouter = require('./routes/index')(passport);
 var postsRouter = require('./routes/posts');
 
 var app = express();
 
-// Configuring Passport
+// configure passport session
 var expressSession = require('express-session');
-// TODO - Why Do we need this key ?
-app.use(expressSession({secret: 'mySecretKey'}));
+// Encrypt session id
+app.use(expressSession({secret: 'secretKeyS12'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
- // Using the flash middleware provided by connect-flash to store messages in session
- // and displaying in templates
+ // We use flash to send messages to templates
 var flash = require('connect-flash');
 app.use(flash());
 
-// Initialize Passport
+// init passport
 var initPassport = require('./passport/initPass');
 initPassport(passport);
 
-// Set up mongoose connection
+// configure mongoose
 var mongoose = require('mongoose');
 
+//MongoDB for RahtiCS environment, code taken from course demo.
 // Reading env variables (config example from https://github.com/sclorg/nodejs-ex/blob/master/server.js)
 var mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
@@ -95,6 +95,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // Use the routes
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
@@ -116,8 +118,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;
 
