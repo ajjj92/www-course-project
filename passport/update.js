@@ -3,7 +3,7 @@ var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(passport){
-
+    //https://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
     //update strategy
     passport.use('update', new LocalStrategy({
         // we can use the whole request as callback
