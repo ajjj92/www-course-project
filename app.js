@@ -78,7 +78,6 @@ if (mongoURL == null) {
 // Connecting to DB
 //for dev
 mongoose.connect(mongoURL);
-//var url = "mongodb+srv://admin:juustonaksu@cluster0.jjndj.azure.mongodb.net/sampledb?retryWrites=true&w=majority";
 mongoose.Promise = Promise;
 //mongoose.connect(url);
 
